@@ -1,0 +1,29 @@
+Ball[] ballsOfSteel;
+
+int i = 0;
+
+void setup() {
+  
+  size(1280, 720);
+  
+}
+
+
+void draw() {
+  background(255,255,255);
+  
+  ballsOfSteel = new Ball[100];
+
+  for (int i = 0; i < 100; i++) {
+    
+    ballsOfSteel[i] = new Ball();
+    ballsOfSteel[i].x = random(width +100);
+    ballsOfSteel[i].y = random(height+100);
+    ballsOfSteel[i].size = (int)random(100);
+
+    ellipse(ballsOfSteel[i].x, ballsOfSteel[i].y, ballsOfSteel[i].size, ballsOfSteel[i].size);
+  }
+  
+  ballsOfSteel[i].x += 5;
+  
+}

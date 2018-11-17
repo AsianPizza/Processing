@@ -24,9 +24,35 @@ public class Ball {
     return false;
   }
 
-
-
-
+  //method for making the ball bounce on something underneath it
+  public void makeBounceBottom(float surface){
+    y = surface - radius;
+    yspeed *= bounce;
+    yspeed -= yspeed * friction;
+    y += yspeed;
+  }
+  //method for making the ball bounce on something above it
+  public void makeBounceTop(float surface){
+    y = surface + radius;
+    yspeed *= bounce;
+    yspeed -= yspeed * friction;
+    y += yspeed;
+  }
+  //Method for making the ball bounce on something to the right
+  public void makeBounceRight(float surface){
+    x = surface - radius;
+    xspeed *= bounce;
+    xspeed -= xspeed * friction;
+    x += xspeed;
+  }
+  //method for making the ball bounce on something to the left
+  public void makeBounceLeft(float surface){
+    x = surface + radius;
+    xspeed *= bounce;
+    xspeed -= xspeed * friction;
+    x += xspeed;
+  }
+  
   private void draw() {
     strokeWeight(5);
     //Giving the ball gravity and base speed values
@@ -43,25 +69,27 @@ public class Ball {
       yspeed -= yspeed * springFriction;
       y += yspeed;
       //}
-    } else if (hit) {   
-      hit = !hit;
-      ball.yspeed += 15;
-      ball.y += ball.yspeed;
-    }
+    } 
 
 
     ellipse(x, y, diameter, diameter);
     //collision with walls, to keep the ball inside the level
     if (x > width - radius || x < 0 + radius || x > width - 60 - radius) {
-      xspeed *= bounce;
+      makeBounceRight(width - 60 - radius);
+      makeBounceRight(width);
+      makeBounceLeft(0);      
+      /*xspeed *= bounce;
       xspeed -= xspeed * friction;
-      x += xspeed;
+      x += xspeed;*/
     } 
     if (y > height - radius || y < 0 + radius) {
-      y = height - radius;
+      makeBounceTop(0);
+      makeBounceBottom(height);
+      
+      /*y = height - radius;
       yspeed *= bounce;
       yspeed -= yspeed * friction;
-      y += yspeed;
+      y += yspeed;*/
     }
   }
 }

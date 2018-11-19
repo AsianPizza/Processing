@@ -8,11 +8,11 @@ public class Spring {
   public Spring(float x, float y) {
     location = new PVector(x, y);
   }
-  
+
   //Setting the minimal and maximal y for the spring location
   public final float MIN_Y = 360;
   public final float MAX_Y = 700;
-  
+
   //To be used when the spring is in its intial state, and making sure it gradually goes up rather than instantly jumping to the new location
   private void displaySpring(float springSpeed) {
     springSpeed *= 1.5;
@@ -27,6 +27,7 @@ public class Spring {
     location.y = Mathf.clamp(location.y, MIN_Y, MAX_Y);
     rect(location.x, location.y, w, h);
   }
+  
   //Checking whether the down key is pressed and adjusting boolean shoot accordingly
   public void keyPressed() {
     if (key == CODED && keyCode == DOWN && !shoot) {
@@ -35,7 +36,7 @@ public class Spring {
   }
 
   public void keyReleased() {
-    if (key == CODED && keyCode == DOWN && shoot) {
+    if (key == CODED && keyCode == DOWN && shoot) {      
       shoot = !shoot;
     }
   }
@@ -47,6 +48,5 @@ public class Spring {
       displaySpring(20);
     } else if (shoot)
       displaySprung(20);
-      
   }
 }

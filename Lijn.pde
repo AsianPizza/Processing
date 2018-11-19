@@ -38,7 +38,7 @@ public class Lijn {
     float d  = sqrt(sq(d1 + d2) + sq(d2 + d1));
 
     if (hit) {
-      ball.xspeed -= 10;
+      ball.xspeed -= 1;
       float peeta = sqrt(sq(ball.xspeed) + sq(ball.yspeed));
       ball.xspeed = (peeta * px / d) * -ball.gravity;
       ball.yspeed = (peeta * py / d) * ball.gravity;

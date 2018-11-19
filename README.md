@@ -1,2 +1,2 @@
-# Processing
-All my personal school stuff
+# pinballFYS
+FYS project

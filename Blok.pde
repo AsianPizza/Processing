@@ -4,6 +4,8 @@ public class Blok {
   public int width;
   public int height;
   public boolean exitFunction;
+  public boolean statusSwitch;
+  public boolean scoreLijst;
   public ButtonStates state = ButtonStates.IDLE;
   //Button location
   public Blok(int x, int y, int width, int height) {
@@ -16,6 +18,7 @@ public class Blok {
     switch(state) {
     case IDLE: 
       {
+        stroke(0);
         fill(0, 0, 255);
         break;
       }
@@ -34,6 +37,13 @@ public class Blok {
     //quit button function
     if (exitFunction) {
       exit();
+    }
+    //game button function
+    if(statusSwitch){
+    statu = Status.statuGame;
+    }
+    if(scoreLijst){
+    statu = Status.statuScore;
     }
     rect(location.x, location.y, width, height);
 

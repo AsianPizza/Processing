@@ -7,6 +7,8 @@ private Ball ball = new Ball();
 private Level level = new Level();
 public Spring spring = new Spring(1225, 360);
 public Deth deth = new Deth();
+public Bumper bumper = new Bumper();
+public Lijst lijst = new Lijst();
 private Lijn lijn = new Lijn();
 
 void setup() {
@@ -28,12 +30,20 @@ void draw() {
       playStateGame();
       break;
     }
-  case statuDeth:
-    {//game over
-      dethStateGame();
-      break;
+  //case statuDeth:
+    //{//game over
+      //dethStateGame();
+      //break;
+    //}
+    case statuScore:
+    {//score
+      lijstStateGame();
     }
   }
+  //dood, deth
+  //if(ball.y >715) {   
+    //statu = Status.statuDeth;
+//}
 }
 //defining functions for specific keys
 void keyPressed() {
@@ -55,25 +65,24 @@ void keyPressed() {
   if (key == ' ') {
     mainMenu.highlightButton(); 
     mainMenu.exitfunction();
+    mainMenu.statusSwitch();
+    mainMenu.scoreLijst();
   }
-  //dit moet een if worden aangezien switch nu aangeeft dat ik terug kan naar mijn main menu wat natuurlijk niet mag en het is geen pauze scherm dus score vervalt dan, ik moet ook nog ervoor zorgen dat play state alleen op de eerste knop zit, nu is het allemaal
-  //voeg in level een zwarte stroke toe om het state kleur switch probleem op te lossen
-  if (key == ' ') {
-    switch (statu) {
-    case statuPause:
-      statu = Status.statuGame;
-      break;
-    case statuGame:
-      statu = Status.statuDeth;
-      break;
-    case statuDeth:
-      statu = Status.statuPause;
-      break;
-    }
-  }
+  //eerste versie van de state switch voor het testen
+  //if (key == ' ') {
+  //  switch (statu) {
+  //  case statuPause:
+  //    statu = Status.statuGame;
+  //    break;
+  //  case statuDeth:
+  //    statu = Status.statuPause;
+  //    break;
+  //  }
+  //}
 }
+
 void keyReleased() {  
-  spring. keyReleased();
+  spring.keyReleased();
   if (key == 'z') {
     rotateFlipper.returnFlip();
   }
@@ -85,7 +94,8 @@ void keyReleased() {
 public enum Status {
   statuPause, 
     statuGame, 
-    statuDeth
+    //statuDeth,
+    statuScore
 }
 
 
@@ -95,6 +105,7 @@ public void playStateGame() {
   lijn.draw();
   rotateFlipper.draw();
   ball.draw();
+  bumper.draw();
 }
 
 public void pauseStateGame() {
@@ -105,5 +116,9 @@ public void pauseStateGame() {
 
 public void dethStateGame() {
   textSize(32);
-  deth.draw();
+  //deth.draw();
+}
+public void lijstStateGame(){
+textSize(20);
+lijst.draw();
 }

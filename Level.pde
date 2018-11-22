@@ -30,7 +30,7 @@ public class Level {
     if (ball.x + ball.radius >= r1x &&
       ball.x - ball.radius <= r1x + r1w &&
       ball.y >= r1y  - ball.radius  &&
-      ball.y <= r1y + r1h)
+      ball.y  + ball.radius <= r1y + r1h)
     {
       ball.xspeed += returnToMiddle;
       ball.x += ball.xspeed;
@@ -41,7 +41,7 @@ public class Level {
     //collision for the sides of the rectangles
     if (ball.x - ball.radius <= r1x + r1w &&
       ball.y >= r1y  - ball.radius  &&
-      ball.y <= r1y + r1h) 
+      ball.y  + ball.radius<= r1y + r1h) 
     {
       ball.xspeed *= ball.bounce;
       ball.x += ball.xspeed;      
@@ -55,7 +55,7 @@ public class Level {
     if (ball.x + ball.radius >= r2x &&
       ball.x - ball.radius <= r2x + r2w &&
       ball.y + ball.radius >= r2y &&
-      ball.y <= r2y + r2h)
+      ball.y + ball.radius <= r2y + r2h)
     {
       ball.xspeed -= returnToMiddle;
       ball.x += ball.xspeed;
@@ -64,9 +64,9 @@ public class Level {
       ball.y += ball.yspeed;
     }
     //collision for the sides of the rectangles
-    if (ball.x - ball.radius >= r2x &&
+    if (ball.x + ball.radius >= r2x &&
       ball.y >= r2y  - ball.radius  &&
-      ball.y <= r2y + r2h) 
+      ball.y + ball.radius <= r2y + r2h) 
     {
       ball.xspeed *= ball.bounce;
       ball.x += ball.xspeed;      
@@ -80,7 +80,7 @@ public class Level {
     if (ball.x + ball.radius >= r3x &&
       ball.x - ball.radius <= r3x + r3w &&
       ball.y + ball.radius >= r3y &&
-      ball.y <= r3y + r3h)
+      ball.y + ball.radius <= r3y + r3h)
     {
       ball.xspeed += returnToMiddle;
       ball.x += ball.xspeed;
@@ -91,7 +91,7 @@ public class Level {
     //collision for the sides of the rectangles
     if (ball.x - ball.radius <= r3x + r3w &&
       ball.y >= r3y  - ball.radius  &&
-      ball.y <= r3y + r3h) 
+      ball.y +  ball.radius <= r3y + r3h) 
     {
       ball.xspeed *= ball.bounce;
       ball.x += ball.xspeed;      
@@ -105,7 +105,7 @@ public class Level {
     if (ball.x + ball.radius >= r4x &&
       ball.x - ball.radius <= r4x + r4w &&
       ball.y + ball.radius >= r4y &&
-      ball.y <= r4y + r4h)
+      ball.y + ball.radius <= r4y + r4h)
     {
       ball.xspeed -= returnToMiddle;
       ball.x += ball.xspeed;
@@ -114,9 +114,9 @@ public class Level {
       ball.y += ball.yspeed;
     }
     //collision for the sides of the rectangles
-    if (ball.x - ball.radius >= r4x &&
+    if (ball.x + ball.radius >= r4x &&
       ball.y >= r4y  - ball.radius  &&
-      ball.y <= r4y + r4h) 
+      ball.y + ball.radius <= r4y + r4h) 
     {
       ball.xspeed *= ball.bounce;
       ball.x += ball.xspeed;      

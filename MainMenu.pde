@@ -1,5 +1,10 @@
 public class MainMenu {
-  //Blok[] blok = new Blok[4]; zoek op aankomend zondag of vraag na op maandag. ik(patrick) en fix de overlopende stroke BS naar een andere status
+  //Blok[] blok = new Blok[4];
+  //blok[0] = new Playb(100, 400, 150, 150); 
+  //blok[1] = new scoreb(400, 400, 150, 150);
+  //blok[2] = new settingb(700, 400, 150, 150);
+  //blok[2] = new exitb(1000, 400, 150, 150);
+  
   private Blok playBlok =    new Blok(100, 400, 150, 150);
   private Blok scoreBlok =   new Blok(400, 400, 150, 150);
   private Blok settingBlok = new Blok(700, 400, 150, 150);
@@ -59,5 +64,15 @@ public class MainMenu {
     if (exitBlok.state == ButtonStates.PRESSED) {
       exitBlok.exitFunction = true;
     }
+  }
+  public void statusSwitch(){
+  if(playBlok.state == ButtonStates.PRESSED){
+  playBlok.statusSwitch = true;
+  }
+  }
+    public void scoreLijst(){
+  if(scoreBlok.state == ButtonStates.PRESSED){
+  scoreBlok.scoreLijst = true;
+  }
   }
 }

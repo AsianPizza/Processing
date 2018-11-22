@@ -5,22 +5,17 @@ public class Ball {
   public float yspeed = 0;
   public float xspeed = 0;
   public float springFriction = 0.8;
-  public int diameter = 30;
-  public int radius = diameter/2;
-  public float x = 120;
+  public float diameter = 30;
+  public float radius = diameter/2;
+  public float x = 1245;
   public float y = 100;
   public float friction = 0.1;
-  
+  public float airfriction = 0.0001;
+  public float maxspeedx = 20;
+  public float maxspeedy = 20;
   public Ball() {
   }
-  
-  public void keyReleased(){
-    if (key == CODED && key == DOWN && spring.shoot){
-      yspeed -= 10;
-      y += yspeed;
-    }
-  }
-  
+
   //detect collision with spring
   public boolean collideWithSpring() { 
     if ((x + radius >= spring.location.x) &&
@@ -33,11 +28,11 @@ public class Ball {
   }
   //method for keeping the ball in the screen using the makeBounce methods
   public void keepInScreen() {
-    if (y - radius > height) {
+    if (y - radius >= height) {
       makeBounceBottom(height);
     }
 
-    if (y + radius < 0) {
+    if (y + radius <= 0) {
       makeBounceTop(0);
     }
 
@@ -50,12 +45,12 @@ public class Ball {
     }
     //Had a little complication where the ball's x would be set to width - 60 when it was bigger than that messing up the initial x value, 
     //made these two so as to make it bounce on either side of the column
-    if (x + radius == width - 61) {
-      makeBounceRight(width - 61);
+    if (x + radius >= width - 60 && !(x + radius > width - 60 - radius)) {
+      makeBounceRight(width - 60);
     }
 
-    if (x + radius == width - 59) {
-      makeBounceRight(width - 59);
+    if (x - radius <= width - 60 && !(x + radius < width - 60 + radius)) {
+      makeBounceLeft(width - 60);
     }
   }
 
@@ -91,7 +86,14 @@ public class Ball {
   private void draw() {
     strokeWeight(5);
     //Giving the ball gravity and base speed values
+    if (xspeed > maxspeedx){
+      xspeed = maxspeedx;
+    }
+    if (yspeed > maxspeedy){
+      yspeed = maxspeedy;
+    }
     yspeed += gravity;
+    yspeed -= yspeed * airfriction;
     y += yspeed;
     x += xspeed;
     keepInScreen();

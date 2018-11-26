@@ -44,7 +44,7 @@ public class Level {
       ball.y  + ball.radius<= r1y + r1h) 
     {
       ball.xspeed *= ball.bounce;
-      ball.x += ball.xspeed;      
+      ball.x += ball.xspeed;
     }
 
     float r2x = (width * twothirds) - 100;
@@ -69,7 +69,15 @@ public class Level {
       ball.y + ball.radius <= r2y + r2h) 
     {
       ball.xspeed *= ball.bounce;
-      ball.x += ball.xspeed;      
+      ball.x += ball.xspeed;
+    }
+    
+    if (ball.x + ball.radius >= r2x + r2w &&
+      ball.y >= r2y  - ball.radius  &&
+      ball.y + ball.radius <= r2y + r2h) 
+    {
+      ball.xspeed *= ball.bounce;
+      ball.x += ball.xspeed;
     }
 
     float r3x = 0;
@@ -94,7 +102,7 @@ public class Level {
       ball.y +  ball.radius <= r3y + r3h) 
     {
       ball.xspeed *= ball.bounce;
-      ball.x += ball.xspeed;      
+      ball.x += ball.xspeed;
     }
 
     float r4x = (width * twothirds) - 100;
@@ -119,7 +127,7 @@ public class Level {
       ball.y + ball.radius <= r4y + r4h) 
     {
       ball.xspeed *= ball.bounce;
-      ball.x += ball.xspeed;      
+      ball.x += ball.xspeed;
     }
     //temporary indicators for the bumper location, to be replaced with actual bumper classes
     //Bumper locations

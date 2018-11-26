@@ -6,7 +6,6 @@ public class Spring {
   private boolean shoot;
   private float springSpeed = 20;
   
-  
   public Spring(float x, float y) {
     location = new PVector(x, y);
   }
@@ -17,14 +16,16 @@ public class Spring {
   
   //To be used when the spring is in its intial state, and making sure it gradually goes up rather than instantly jumping to the new location
   private void displaySpring(float springSpeed) {
-    springSpeed *= 1.5;
+    float releaseSpeed = 1.5f;
+    springSpeed *= releaseSpeed;
     location.y -= springSpeed;
     location.y = Mathf.clamp(location.y, MIN_Y, MAX_Y);
     rect(location.x, location.y, w, h);
   }
   //To be used when the spring has been dragged down
   private void displaySprung(float springSpeed) {
-    springSpeed *= .45;
+    Float pullingFriction = 0.45f;
+    springSpeed *= pullingFriction;
     location.y += springSpeed;
     location.y = Mathf.clamp(location.y, MIN_Y, MAX_Y);
     rect(location.x, location.y, w, h);

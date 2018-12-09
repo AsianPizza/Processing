@@ -1,15 +1,19 @@
-public class RotateFlipper {
-  private Flipper leftFlipper = new Flipper(560, 640, 60, 15);
-  private Flippern rightFlipper = new Flippern(730, 650, 55, 15);
-
+public class RotateFlipper {//verschil tussen de 2 balken is 200 precies dus doorbij de ene zoveel erbij te doen als bij de andere eraf te halen krijg je gelijke flippers
+  private Flipper leftFlipper = new Flipper(558, 640, 50, 15);
+  private Flipper topLeftFlipper = new Flipper(558, 900, 50, 15);
+  private Flippern rightFlipper = new Flippern(720, 640, 50, -15);
+  private Flippern topRightFlipper = new Flippern(720, 900, 50, -15);
+//de stand aanroepen van de flippers met enums
   public RotateFlipper() {
     leftFlipper.statb = ButtonStatbs.IDLE;
     rightFlipper.stat = ButtonStats.IDLE;
   }
-
+//flippers laten verschijnen
   public void draw() {
+    topLeftFlipper.draw();
     leftFlipper.draw();
     rightFlipper.draw();
+    topRightFlipper.draw();
   }
 
   public void flipFlip() {
@@ -30,3 +34,9 @@ public class RotateFlipper {
     }
   }
 }
+//currentrotation-0.17453292
+//currentrotation-0.34906584
+//currentrotation-0.5235988
+//currentrotation-0.6981317
+//currentrotation-0.8726646
+//currentrotation-1.0471975

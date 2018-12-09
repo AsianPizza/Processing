@@ -2,7 +2,7 @@ public class Flippern { //70, 135 en -10
   private float width, height; //size
   private PVector location;
   private float currentRotation;
-  private final float MAX_ROTATION = radians(70);
+  private final float MAX_ROTATION = radians(60);
   public ButtonStats stat = ButtonStats.IDLE;
   //constructor
   private Flippern(int x, int y, int width, int height) {  
@@ -17,12 +17,12 @@ public class Flippern { //70, 135 en -10
   }
 
   public void draw () {
-
+    Collision(location.x, location.y, currentRotation, MAX_ROTATION);
     pushMatrix();
 
     translate (location.x, location.y);
     //start rotatie
-    rotate(radians(135));
+    rotate(radians(145));
     //---
     switch(stat) {
     case PRESSED:
@@ -43,6 +43,7 @@ public class Flippern { //70, 135 en -10
     popMatrix();
   }
 }
+
 
 public enum stats {
   Left, Right

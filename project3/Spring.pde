@@ -11,11 +11,12 @@ public class Spring {
     location = new PVector(x, y);
   }
 
-  //Setting the minimal and maximal y for the spring location
+  //Setting the minimal and maximal y for the spring location and firingspeed to give to the ball when it's shot away
   public final float MIN_Y = 360;
   public final float MAX_Y = 700;
   private float firingSpeed = 0;
-
+  
+  //detecting collision with the ball
   private boolean ballCollision() {
     if (ball.x + ball.radius >= spring.location.x &&
       ball.x - ball.radius < spring.location.x + spring.w &&
@@ -29,14 +30,14 @@ public class Spring {
     return false;
   }
 
-  private void ballPull() {
-    ball.y = location.y - ball.radius;
-  }
+  //private void ballPull() {
+  //  ball.y = location.y - ball.radius;
+  //}
 
-  private void fireBall() {
-    ball.yspeed -= firingSpeed;
-    ball.y += ball.yspeed;
-  }
+  //private void fireBall() {
+  //  ball.yspeed -= firingSpeed;
+  //  ball.y += ball.yspeed;
+  //}
 
   //To be used when the spring is in its intial state, and making sure it gradually goes up rather than instantly jumping to the new location
   private void displaySpring(float springSpeed) {
@@ -71,7 +72,7 @@ public class Spring {
 
   private void draw() {
     fill(0, 0, 0);
-
+    // Setting up basic collision for a rectangle and adjusting the ball speed so it doesnt bounce too high on the spring
     if (ball.x + ball.radius >= spring.location.x &&
       ball.x - ball.radius < spring.location.x + spring.w &&
       ball.y + ball.radius >= spring.location.y) {
@@ -87,7 +88,8 @@ public class Spring {
     }
 
     float sdy = MIN_Y + location.y;
-
+    
+    //Adjusting the amount of speed given to the ball based on how low you pull the spring, also making sure the spring doesn't funtion after the ball was shot out of the column
     if (ball.x >= width - 60) {
       if (sdy > 720 && sdy <= 805 && shoot) {
         ballCollision();
@@ -119,8 +121,5 @@ public class Spring {
       displaySpring(springSpeed);
       shoot = false;
     }
-
-    println(firingSpeed);
-    println(ball.yspeed);
   }
 }

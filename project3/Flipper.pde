@@ -18,7 +18,7 @@ public class Flipper { //-60, 35, 10
   }
 
   public void draw () {
-
+    
     Collision(location.x, location.y, currentRotation, MAX_ROTATION);
 
 
@@ -57,30 +57,36 @@ public enum ButtonStatbs {
 }
 
 public void Collision(float x, float y, float rotation, float maxRotation) {
-
+  //very simple rectangle collision detection and making sure it only detects collision if the ball is no longer in the shooting column
   if (ball.x + ball.radius >= x &&
     ball.x - ball.radius <= x + this.width &&
     ball.y + ball.radius >= y &&
-    ball.y + ball.radius <= y + this.height)
+    ball.y + ball.radius <= y + this.height &&
+    ball.x < width - 60)
   {
     System.out.println("hit");
-    float rotateQrt = 15;
+    //Giving the ball set speeds based on the flippers' current rotation
+    float rotateQrt = radians(15);
     float dr = maxRotation - rotation;
     if (dr >= maxRotation && dr <= maxRotation + rotateQrt) {
       ball.xspeed += 1;
       ball.yspeed += 1;
+      System.out.println("current"+radians(dr));
     } else if (dr >= maxRotation + rotateQrt && dr <= maxRotation + (rotateQrt * 2)) {
       ball.xspeed += 10;
       ball.yspeed += 10;
+      System.out.println("current"+radians(dr));
     } else if (dr >= maxRotation + (rotateQrt * 2)&& dr <= maxRotation + (rotateQrt * 3)) {
       ball.xspeed += 12;
       ball.yspeed += 12;
+      System.out.println("current"+radians(dr));
     } else if (dr >= maxRotation + (rotateQrt * 3)&& dr <= maxRotation + (rotateQrt * 4)) {
       ball.xspeed += 14;
       ball.yspeed += 14;
+      System.out.println("current"+radians(dr));
     }
     ball.y = y;
     ball.xspeed *= ball.bounce;
     ball.yspeed *= ball.bounce;
   }
-}
+}  

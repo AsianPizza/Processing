@@ -8,7 +8,7 @@ public class Lijn {
 
   public Lijn() {
   }
-
+  //Setting up point collision detection for the diagonal line at the top of the shooting column, to make sure the ball bounces into the level
   public boolean linePoint(float x1, float y1, float x2, float y2, float px, float py) {
 
     float lineLength = dist(x1, y1, x2, y2); 
@@ -24,7 +24,7 @@ public class Lijn {
   }
 
   private void draw() {
-
+    //Getting the right angle to give the ball when it bounces on the line using Pythagoras
     float px = ball.x + ball.radius;
     float py = ball.y + ball.radius;
 
@@ -40,9 +40,9 @@ public class Lijn {
     if (hit) {
       float peeta = sqrt(sq(ball.xspeed) + sq(ball.yspeed));
       ball.xspeed = (peeta * px / d) * -ball.gravity;
-      ball.yspeed = (peeta * py / d) * -ball.gravity;
-      ball.x += ball.xspeed * 0.00000005;
-      ball.y += ball.yspeed * 0.00000005;
+      ball.yspeed = (peeta * py / d) * ball.gravity;
+      ball.x += ball.xspeed;
+      ball.y += ball.yspeed;
     }
   }
 }

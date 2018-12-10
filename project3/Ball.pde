@@ -8,7 +8,7 @@ public class Ball {
   public float springFriction = 0.8;
   public float diameter = 30;
   public float radius = diameter/2;
-  public float x = 565;
+  public float x = 1250;
   public float y = 100;
   public float friction = 0.1;
   public float airfriction = 0.0001;

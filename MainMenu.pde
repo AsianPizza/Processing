@@ -1,78 +1,134 @@
 public class MainMenu {
+  PImage titleScreen1;
+  PImage titleScreen2;
+  PImage titleScreen3;
+  PImage play;
+  PImage score;
+  PImage setting;
+  PImage exit;
+  PImage backGround;
   //Blok[] blok = new Blok[4];
   //blok[0] = new Playb(100, 400, 150, 150); 
   //blok[1] = new scoreb(400, 400, 150, 150);
   //blok[2] = new settingb(700, 400, 150, 150);
   //blok[2] = new exitb(1000, 400, 150, 150);
-  
-  private Blok playBlok =    new Blok(100, 400, 150, 150);
-  private Blok scoreBlok =   new Blok(400, 400, 150, 150);
-  private Blok settingBlok = new Blok(700, 400, 150, 150);
-  private Blok exitBlok =    new Blok(1000, 400, 150, 150);
+
+  public Block playBlock =    new Block(100, 470, 150, 150);
+  public Block scoreBlock =   new Block(400, 470, 150, 150);
+  public Block settingBlock = new Block(700, 470, 150, 150);
+  public Block exitBlock =    new Block(1000, 470, 150, 150);
 
   public MainMenu() {
-    playBlok.state = ButtonStates.SELECTED;
-    exitBlok.exitFunction = false;
+    playBlock.state = ButtonStates.SELECTED;
+    exitBlock.exitFunction = false;
+  }
+  public void init() {
+    backGround = loadImage("wall.jpg");
+    play = loadImage("play.png");
+    score = loadImage("score.png");
+    setting = loadImage("setting.png");
+    exit = loadImage("exit.png");
   }
 
   public void draw() {
-    playBlok.draw();
-    scoreBlok.draw();
-    settingBlok.draw();
-    exitBlok.draw();
+    background(backGround);
+    playBlock.draw();
+    scoreBlock.draw();
+    settingBlock.draw();
+    exitBlock.draw();
+    fill(0);
+    text("Totally", 440, 160);
+    text("Rad", 540, 280);
+    fill(255);
+    text("Totally", 420, 120);
+    text("Rad", 520, 240);
+    image(play, 130, 495);
+    image(score, 430, 495);
+    image(setting, 727, 495);
+    image(exit, 1025, 495);
   }
+
+
   //naar rechts gaan
   public void selectNextButton() {
-    if (playBlok.state == ButtonStates.SELECTED || playBlok.state == ButtonStates.PRESSED) {
-      playBlok.state = ButtonStates.IDLE;
-      scoreBlok.state = ButtonStates.SELECTED;
-    } else if (scoreBlok.state == ButtonStates.SELECTED || scoreBlok.state == ButtonStates.PRESSED) {
-      scoreBlok.state = ButtonStates.IDLE;
-      settingBlok.state = ButtonStates.SELECTED;
-    } else if (settingBlok.state == ButtonStates.SELECTED || settingBlok.state == ButtonStates.PRESSED) {
-      settingBlok.state =  ButtonStates.IDLE;
-      exitBlok.state = ButtonStates.SELECTED;
+    if (playBlock.state == ButtonStates.SELECTED || playBlock.state == ButtonStates.PRESSED) {
+      playBlock.state = ButtonStates.IDLE;
+      scoreBlock.state = ButtonStates.SELECTED;
+    } else if (scoreBlock.state == ButtonStates.SELECTED || scoreBlock.state == ButtonStates.PRESSED) {
+      scoreBlock.state = ButtonStates.IDLE;
+      settingBlock.state = ButtonStates.SELECTED;
+    } else if (settingBlock.state == ButtonStates.SELECTED || settingBlock.state == ButtonStates.PRESSED) {
+      settingBlock.state =  ButtonStates.IDLE;
+      exitBlock.state = ButtonStates.SELECTED;
     }
   }
   //naar links gaan
   public void selectPreviousButton() {
-    if (scoreBlok.state == ButtonStates.SELECTED || scoreBlok.state == ButtonStates.PRESSED) {
-      scoreBlok.state = ButtonStates.IDLE;
-      playBlok.state = ButtonStates.SELECTED;
-    } else if (settingBlok.state == ButtonStates.SELECTED || settingBlok.state == ButtonStates.PRESSED) {
-      settingBlok.state = ButtonStates.IDLE;
-      scoreBlok.state = ButtonStates.SELECTED;
-    } else if (exitBlok.state == ButtonStates.SELECTED || exitBlok.state == ButtonStates.PRESSED) {
-      exitBlok.state = ButtonStates.IDLE;
-      settingBlok.state = ButtonStates.SELECTED;
+    if (scoreBlock.state == ButtonStates.SELECTED || scoreBlock.state == ButtonStates.PRESSED) {
+      scoreBlock.state = ButtonStates.IDLE;
+      playBlock.state = ButtonStates.SELECTED;
+    } else if (settingBlock.state == ButtonStates.SELECTED || settingBlock.state == ButtonStates.PRESSED) {
+      settingBlock.state = ButtonStates.IDLE;
+      scoreBlock.state = ButtonStates.SELECTED;
+    } else if (exitBlock.state == ButtonStates.SELECTED || exitBlock.state == ButtonStates.PRESSED) {
+      exitBlock.state = ButtonStates.IDLE;
+      settingBlock.state = ButtonStates.SELECTED;
     }
   }
   //knop indrukken
   public void highlightButton() {
-    if (playBlok.state == ButtonStates.SELECTED) {
-      playBlok.state = ButtonStates.PRESSED;
-    } else if (scoreBlok.state == ButtonStates.SELECTED) {
-      scoreBlok.state = ButtonStates.PRESSED;
-    } else if (settingBlok.state == ButtonStates.SELECTED) {
-      settingBlok.state = ButtonStates.PRESSED;
-    } else if (exitBlok.state == ButtonStates.SELECTED) {
-      exitBlok.state = ButtonStates.PRESSED;
+    if (playBlock.state == ButtonStates.SELECTED) {
+      playBlock.state = ButtonStates.PRESSED;
+      pressedSound.play();
+    } else if (scoreBlock.state == ButtonStates.SELECTED) {
+      scoreBlock.state = ButtonStates.PRESSED;  
+      settingsBg.play();
+    } else if (settingBlock.state == ButtonStates.SELECTED) {
+      settingBlock.state = ButtonStates.PRESSED;
+      settingsBg.play();
+    } else if (exitBlock.state == ButtonStates.SELECTED) {
+      exitBlock.state = ButtonStates.PRESSED;
+      settingsBg.play();
     }
   }
   //exitknop functie(exit)
   public void exitfunction() {
-    if (exitBlok.state == ButtonStates.PRESSED) {
-      exitBlok.exitFunction = true;
+    if (exitBlock.state == ButtonStates.PRESSED) {
+      exitBlock.exitFunction = true;
+      highscores.save("highscore.csv");
     }
   }
-  public void statusSwitch(){
-  if(playBlok.state == ButtonStates.PRESSED){
-  playBlok.statusSwitch = true;
+  public void statusSwitch() {
+    if (playBlock.state == ButtonStates.PRESSED) {
+      playBlock.statusSwitch = true;
+    }
   }
+  public void scoreLijst() {
+    if (scoreBlock.state == ButtonStates.PRESSED) {
+      scoreBlock.scoreList = true;
+    }
   }
-    public void scoreLijst(){
-  if(scoreBlok.state == ButtonStates.PRESSED){
-  scoreBlok.scoreLijst = true;
+  public void settingMenu() {
+    if (settingBlock.state == ButtonStates.PRESSED) {
+      settingBlock.settingsMenu = true;
+    }
   }
+  public void reset() {
+    if (playBlock.state == ButtonStates.PRESSED) {
+      playBlock.state = ButtonStates.SELECTED;
+      playBlock.statusSwitch = false;
+    }
+  }
+  public void reset1() {
+    if (scoreBlock.state == ButtonStates.PRESSED) {
+      scoreBlock.state = ButtonStates.SELECTED;
+      scoreBlock.scoreList = false;
+    }
+  }
+  public void reset2() {
+    if (settingBlock.state == ButtonStates.PRESSED) {
+      settingBlock.state = ButtonStates.SELECTED;
+      settingBlock.settingsMenu = false;
+    }
   }
 }

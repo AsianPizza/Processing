@@ -1,5 +1,6 @@
 public class Ball {
   //setting up some variables to use for the ball
+  //PImage PrimaryBall;
   public float gravity = 0.98f;
   public final float bounce = -1;
   public float yspeed = 0;
@@ -7,25 +8,27 @@ public class Ball {
   public float springFriction = 0.8;
   public float diameter = 30;
   public float radius = diameter/2;
-  public float x = 120;
+  public float x = 190;
   public float y = 100;
   public float friction = 0.1;
   public float airfriction = 0.0001;
-  public float maxspeedx = 25;
-  public float maxspeedy = 25;
+  public float maxspeedx = 20;
+  public float maxspeedy = 20;
+  
   public Ball() {
   }
 
+
   //detect collision with spring
-  /*public boolean collideWithSpring() { 
-   if ((x + radius >= spring.location.x) &&
-   (x - radius < spring.location.x + spring.w) &&
-   (y + radius > spring.location.y))
-   {
-   return true;
-   }
-   return false;
-   }*/
+  public boolean collideWithSpring() { 
+    if ((x + radius >= spring.location.x) &&
+      (x - radius < spring.location.x + spring.w) &&
+      (y + radius > spring.location.y))
+    {
+      return true;
+    }
+    return false;
+  }
   //method for keeping the ball in the screen using the makeBounce methods
   public void keepInScreen() {
     if (y - radius >= height) {
@@ -85,6 +88,8 @@ public class Ball {
 
   private void draw() {
     strokeWeight(5);
+    fill(255, 0, 0);
+    //image(PrimaryBall, x, y, diameter, diameter);
     //Giving the ball gravity and base speed values
     if (xspeed > maxspeedx) {
       xspeed = maxspeedx;
@@ -97,23 +102,19 @@ public class Ball {
     y += yspeed;
     x += xspeed;
     keepInScreen();
-
     //if there is collision do this, make the ball bounce on the spring with increased friction to make sure it can be shot away after not too long
-    //boolean hit = collideWithSpring();
-    if (x + radius >= spring.location.x &&
-      x - radius < spring.location.x + spring.w &&
-      y + radius >= spring.location.y) {
+    boolean hit = collideWithSpring();
+    //float pballY = dist(x, y, spring.location.x, spring.location.y);
+    if (hit) {
+      //if (dist(x, y, x, spring.location.y) <= (radius)) {
       makeBounceBottom(spring.location.y);
+      //y = spring.location.y - radius;
+      //yspeed *= bounce;
       yspeed -= yspeed * springFriction;
+      //y += yspeed;
       //}
     } 
-
-    if (spring.shoot && spring.location.y >= 360) {
-      yspeed -= 10;
-      y += yspeed;
-    }
-
     //drawing the ball
-    ellipse(x, y, diameter, diameter);
+    //ellipse(x, y, diameter, diameter);
   }
 }

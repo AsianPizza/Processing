@@ -1,147 +1,139 @@
-public class Level {
-  //preventing some magic numbers and saving myself some typing
-  public float third = 1f/3f;
-  public float twothirds = 2f/3f;
-  public float x1, y1, x2, y2;
-  //making the sure the ball doesn't stay still on one of the rectangles
-  private float returnToMiddle = 0.5;
+class Level {
 
-  public Level() {
+  public float x = 0; //To be used for the x1 and x2 in the triangle to determine the x coordinates
+  public float y = 720; //To be used for the y1 and y3 to determine the y coordinates of the triangle
+  private float oldXspeed;
+  private float oldYspeed;
+  private float x1;
+  private float y1; 
+  private float x2;
+  private float y2; 
+  private float x3; 
+  private float y3;
+  public float size = 380; //To be used for the y2 and x3 in the triangle named equal as these are the equal sides of the triangle
+
+
+
+  public Level(float x1, float y1, float x2, float y2, float x3, float y3) {
+    this.x1 = x1;
+    this.y1 = y1;
+    this.x2 = x2;
+    this.y2 = y2;
+    this.x3 = x3;
+    this.y3 = y3;
   }
 
   private void draw() {
-    //drawing general outlining of the level
+    fill(255, 0, 0);
+    if (ball.x <= 380) {
+      //System.out.println("in left square ");
+      leftCorner(size);
+    } else if (ball.x >= 840) {
+      //System.out.println("in right square ");
+      rightCorner(size);
+    }
+    triangle(x1, y1, x2, y2, x3, y3);
+  }
+
+  public boolean inSquare(float x1, float x3) {
     noFill();
-    line(0, 0, width, 0);
-    line(0, 0, 0, height);    
-    line(0, height - 1, (width * third) + 100, height - 1);
-    line(width, height - 1, (width * twothirds) - 100, height - 1);
-    line(width, 0, width - 1, height);
-    line(width - 60, 100, width - 60, height);
-    //line(width, 60, width - 60, 0);    
+    noStroke();
+    rect(x1, x3, x3, x3);
+    stroke(1);
+    fill(255);
+    if ((ball.x + ball.radius > x1) &&
+      (ball.x - ball.radius < x1 + x3) &&
+      (ball.y > height - x3)) {
+      //System.out.println("in a square ");
+      return true;
+    } else
+      return false;
+  }
 
-    //Drawing rectangles to use for the level, and giving them x, y, width and height values so as to make it easier to write the collision for each rectangle
-    float r1x = 0;
-    float r1y = height/2 - 80;
-    float r1w = (width * third) + 100;
-    float r1h = 80;
-    rect(r1x, r1y, r1w, r1h);
-    //Basic collision for all rectangles
-    if (ball.x + ball.radius >= r1x &&
-      ball.x - ball.radius <= r1x + r1w &&
-      ball.y >= r1y  - ball.radius  &&
-      ball.y  + ball.radius <= r1y + r1h)
-    {
-      ball.xspeed += returnToMiddle;
-      ball.x += ball.xspeed;
-      ball.yspeed *= ball.bounce;
-      ball.yspeed *= ball.gravity;
-      ball.y += ball.yspeed;
-    }
-    //collision for the sides of the rectangles
-    if (ball.x - ball.radius <= r1x + r1w &&
-      ball.y >= r1y  - ball.radius  &&
-      ball.y  + ball.radius<= r1y + r1h) 
-    {
-      ball.xspeed *= ball.bounce;
-      ball.x += ball.xspeed;
+  public void leftCorner(float size) {
+    float middle = size/2;
+    float dx = middle - (ball.x);
+    float dy = (height - middle) - (ball.y + ball.radius);
+    //System.out.println(dx + " " + dy);
+
+    if (inSquare(x1, x3) && dx >= dy && ball.y + ball.radius <= (height - middle) && ball.x - ball.radius <= middle) {
+
+      bounceLeft();
+
+      //ball.y += -ball.yspeed;
+      //ball.x += ball.xspeed;
+    } else {
+      oldXspeed = ball.xspeed;
+      oldYspeed = ball.yspeed;
     }
 
-    float r2x = (width * twothirds) - 100;
-    float r2y = height/2 - 80;
-    float r2w= 466;
-    float r2h = 80;
-    rect(r2x, r2y, r2w, r2h);
-    if (ball.x + ball.radius >= r2x &&
-      ball.x - ball.radius <= r2x + r2w &&
-      ball.y + ball.radius >= r2y &&
-      ball.y + ball.radius <= r2y + r2h)
-    {
-      ball.xspeed -= returnToMiddle;
-      ball.x += ball.xspeed;
-      ball.yspeed *= ball.bounce;
-      ball.yspeed *= ball.gravity;
-      ball.y += ball.yspeed;
+    if (inSquare(x1, x3) && dx >= dy && ball.y + ball.radius >= (height - middle) && ball.x + ball.radius >= middle) {
+
+      bounceLeft();
+
+      //ball.y += -ball.yspeed;
+      //ball.x += ball.xspeed;
+    } else {
+      oldXspeed = ball.xspeed;
+      oldYspeed = ball.yspeed;
     }
-    //collision for the sides of the rectangles
-    if (ball.x + ball.radius >= r2x &&
-      ball.y >= r2y  - ball.radius  &&
-      ball.y + ball.radius <= r2y + r2h) 
-    {
-      ball.xspeed *= ball.bounce;
-      ball.x += ball.xspeed;
+  }
+
+  public void rightCorner(float size) {
+    float middle = size/2;
+    float dx = (1220 - middle) - ball.x;
+    float dy = (height - middle) - (ball.y + ball.radius);
+    System.out.println(dx * -1 + " " + dy + " " + inSquare(840, 380));
+
+    if (inSquare(840, 380) && dy * -1 >= dx && ball.y + ball.radius >= (height - middle) && ball.x + ball.radius <= x1 - middle) {
+      System.out.println("hit "+ dx + " " + dy * -1);
+
+      bounceRight();   
+
+      //ball.y += -ball.yspeed;
+      //ball.x += ball.xspeed;
+      //System.out.println(ball.xspeed);
+    } else {
+      oldXspeed = ball.xspeed;
+      oldYspeed = ball.yspeed;
     }
+
+    if (inSquare(840, 380) && dx * -1 >= dy && ball.y + ball.radius <= (height - middle) && ball.x - ball.radius >= x1 - middle) {
+      System.out.println("hit "+ dx * -1 + " " + dy);
+
+      bounceRight();  
+
+
+      //ball.y += -ball.yspeed;
+      //ball.x += ball.xspeed;
+    } else {
+      oldXspeed = ball.xspeed;
+      oldYspeed = ball.yspeed;
+    }
+  }
+  void bounceLeft() {
+    //return to old pos
+    ball.y -= ball.yspeed;
+    ball.x -= ball.xspeed;
     
-    if (ball.x + ball.radius >= r2x + r2w &&
-      ball.y >= r2y  - ball.radius  &&
-      ball.y + ball.radius <= r2y + r2h) 
-    {
-      ball.xspeed *= ball.bounce;
-      ball.x += ball.xspeed;
-    }
-
-    float r3x = 0;
-    float r3y = height- 80;
-    float r3w= (width * third) + 100;
-    float r3h = 80;
-    rect(r3x, r3y, r3w, r3h);
-    if (ball.x + ball.radius >= r3x &&
-      ball.x - ball.radius <= r3x + r3w &&
-      ball.y + ball.radius >= r3y &&
-      ball.y + ball.radius <= r3y + r3h)
-    {
-      ball.xspeed += returnToMiddle;
-      ball.x += ball.xspeed;
-      ball.yspeed *= ball.bounce;
-      ball.yspeed *= ball.gravity;
-      ball.y += ball.yspeed;
-    }
-    //collision for the sides of the rectangles
-    if (ball.x - ball.radius <= r3x + r3w &&
-      ball.y >= r3y  - ball.radius  &&
-      ball.y +  ball.radius <= r3y + r3h) 
-    {
-      ball.xspeed *= ball.bounce;
-      ball.x += ball.xspeed;
-    }
-
-    float r4x = (width * twothirds) - 100;
-    float r4y = height- 80;
-    float r4w= 466;
-    float r4h = 80;
-    rect(r4x, r4y, r4w, r4h);
-    if (ball.x + ball.radius >= r4x &&
-      ball.x - ball.radius <= r4x + r4w &&
-      ball.y + ball.radius >= r4y &&
-      ball.y + ball.radius <= r4y + r4h)
-    {
-      ball.xspeed -= returnToMiddle;
-      ball.x += ball.xspeed;
-      ball.yspeed *= ball.bounce;
-      ball.yspeed *= ball.gravity;
-      ball.y += ball.yspeed;
-    }
-    //collision for the sides of the rectangles
-    if (ball.x + ball.radius >= r4x &&
-      ball.y >= r4y  - ball.radius  &&
-      ball.y + ball.radius <= r4y + r4h) 
-    {
-      ball.xspeed *= ball.bounce;
-      ball.x += ball.xspeed;
-    }
-    //temporary indicators for the bumper location, to be replaced with actual bumper classes
-    //Bumper locations
-    fill(255, 0, 255);
-    //Top right in curve
-    ellipse(1145, 165, 35, 35);
-    //top left corner
-    ellipse(65, 85, 35, 35);
-    ellipse(95, 165, 35, 35);
-    ellipse(155, 105, 35, 35);
-    //bottom right corner
-    ellipse(1165, 385, 35, 35);
-    ellipse(990, 480, 35, 35);
-    ellipse(1035, 560, 35, 35);
-    ellipse(940, 550, 35, 35);
+    ball.xspeed = oldXspeed;
+    ball.yspeed = oldYspeed;      
+    //ball.xspeed *= ball.bounce;
+    //ball.yspeed *= ball.bounce;
+    ball.yspeed = oldXspeed;
+    ball.xspeed = oldYspeed;
+  }
+  void bounceRight() {
+    //return to old pos
+    ball.y -= ball.yspeed;
+    ball.x -= ball.xspeed;
+    
+    
+    ball.xspeed = oldXspeed;
+    ball.yspeed = oldYspeed;
+    //ball.xspeed *= ball.bounce;
+    //ball.yspeed *= ball.bounce;
+    ball.xspeed = -oldYspeed;
+    ball.yspeed = -oldXspeed;
   }
 }
